@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J Calvin — Split Screen Hero Variations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #CC0A0A;
+            --red-dark: #a80808;
+            --red-soft: #e8302f;
+            --charcoal: #1e1e1e;
+            --dark-section: #1a1a1e;
+            --white: #ffffff;
+            --font-display: 'Bebas Neue', sans-serif;
+            --font-subhead: 'Barlow Condensed', sans-serif;
+            --font-body: 'Barlow', sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--charcoal); color: #ccc; line-height: 1.7; overflow-x: hidden; }
+        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; color: inherit; }
+
+        /* NAV */
+        .option-nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(30,30,30,0.95); backdrop-filter: blur(10px); z-index: 9999; padding: 12px 0; border-bottom: 2px solid var(--red); }
+        .option-nav-inner { max-width: 1140px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .option-nav-title { font-family: var(--font-display); font-size: 1.3rem; color: var(--white); letter-spacing: 1px; margin-right: 12px; white-space: nowrap; }
+        .option-nav a { font-family: var(--font-subhead); font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.08); padding: 6px 14px; border-radius: 4px; transition: all 0.2s; white-space: nowrap; }
+        .option-nav a:hover { color: var(--white); background: var(--red); }
+
+        /* Divider */
+        .option-divider { background: var(--charcoal); padding: 60px 24px 20px; text-align: center; max-width: 1140px; margin: 0 auto; }
+        .option-divider h2 { font-family: var(--font-display); font-size: 2rem; color: var(--white); letter-spacing: 2px; }
+        .option-divider p { color: #888; font-size: 0.9rem; max-width: 600px; margin: 6px auto 0; }
+        .option-tag { display: inline-block; background: var(--red); color: var(--white); font-family: var(--font-subhead); font-weight: 700; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; border-radius: 4px; margin-bottom: 10px; }
+
+        /* BUTTONS */
+        .btn { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-subhead); font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase; padding: 16px 36px; border-radius: 6px; border: none; cursor: pointer; transition: all 0.3s ease; text-decoration: none; }
+        .btn-whatsapp { background: #25D366; color: var(--white); box-shadow: 0 4px 16px rgba(37,211,102,0.25); }
+        .btn-whatsapp:hover { background: #1fb855; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(37,211,102,0.35); }
+        .btn-primary { background: var(--red); color: var(--white); box-shadow: 0 4px 16px rgba(204,10,10,0.25); }
+        .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); }
+        .btn-outline-light { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.5); }
+        .btn-outline-light:hover { background: var(--white); color: var(--charcoal); }
+        .btn-white { background: var(--white); color: var(--charcoal); }
+        .btn-white:hover { background: #f0f0f0; transform: translateY(-2px); }
+        .btn svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
+        .btn-sm { font-size: 0.95rem; padding: 12px 24px; }
+        .btn-lg { font-size: 1.2rem; padding: 20px 44px; }
+
+        .wa-svg { display: inline-block; }
+
+        /* ============================================================
+           SHARED SPLIT-SCREEN BASE
+           ============================================================ */
+        .hero-split { min-height: 92vh; display: flex; align-items: center; position: relative; overflow: hidden; padding: 80px 0; }
+        .hero-split .ba-bg { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; }
+        .hero-split .ba-bg img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-split .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 3; }
+        .hero-split .hero-overlay { text-align: center; max-width: 760px; margin: 0 auto; }
+        .hero-split .headline { font-family: var(--font-display); line-height: 1.05; letter-spacing: 1px; margin-bottom: 20px; }
+        .hero-split .subhead { font-family: var(--font-body); font-size: 1.15rem; font-weight: 400; line-height: 1.7; max-width: 560px; }
+        .hero-split .eyebrow { font-family: var(--font-subhead); font-weight: 700; font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; display: inline-block; }
+        .hero-split .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        /* ============================================================
+           V1 — Original (baseline)
+           Dark overlay, red divider, centered text
+           ============================================================ */
+        .v1 .ba-bg .ba-side-before { filter: brightness(0.4) saturate(0.5); }
+        .v1 .ba-bg .ba-side-after { filter: brightness(0.55); }
+        .v1 .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: var(--red); z-index: 2; }
+        .v1 .ba-watermark { position: absolute; top: 50%; transform: translateY(-50%); font-family: var(--font-display); font-size: clamp(3rem, 8vw, 7rem); color: rgba(255,255,255,0.06); letter-spacing: 8px; z-index: 1; }
+        .v1 .ba-watermark-l { left: 40px; }
+        .v1 .ba-watermark-r { right: 40px; }
+        .v1 .eyebrow { color: var(--red-soft); }
+        .v1 .headline { font-size: clamp(3rem, 7vw, 5.4rem); color: var(--white); text-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+        .v1 .text-red { color: var(--red); }
+        .v1 .subhead { color: rgba(255,255,255,0.85); margin: 0 auto 32px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+
+        /* ============================================================
+           V2 — Angled Divider
+           Diagonal slash instead of straight line
+           ============================================================ */
+        .v2 .ba-bg .ba-side-before { filter: brightness(0.35) saturate(0.4); }
+        .v2 .ba-bg .ba-side-after { filter: brightness(0.5) saturate(0.8); }
+        .v2 .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 100px; transform: translateX(-50%) skewX(-6deg); background: var(--red); z-index: 2; opacity: 0.9; }
+        .v2 .eyebrow { color: #f0c040; }
+        .v2 .headline { font-size: clamp(3rem, 7vw, 5.2rem); color: var(--white); text-shadow: 0 4px 30px rgba(0,0,0,0.6); }
+        .v2 .text-accent { color: #f0c040; }
+        .v2 .subhead { color: rgba(255,255,255,0.8); margin: 0 auto 32px; }
+
+        /* ============================================================
+           V3 — Top Banner + Darker Mood
+           Urgency banner sits above the hero text
+           ============================================================ */
+        .v3 .ba-bg .ba-side-before { filter: brightness(0.3) saturate(0.3); }
+        .v3 .ba-bg .ba-side-after { filter: brightness(0.45) saturate(0.7); }
+        .v3 .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: rgba(255,255,255,0.15); z-index: 2; }
+        .v3 .top-banner { background: var(--red); padding: 10px 24px; border-radius: 6px; display: inline-flex; align-items: center; gap: 10px; margin-bottom: 24px; font-family: var(--font-subhead); font-weight: 700; font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); animation: pulse-glow 2.5s ease-in-out infinite; }
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(204,10,10,0.4); } 50% { box-shadow: 0 0 0 10px rgba(204,10,10,0); } }
+        .v3 .headline { font-size: clamp(2.8rem, 6.5vw, 5rem); color: var(--white); text-shadow: 0 4px 40px rgba(0,0,0,0.7); }
+        .v3 .text-red { color: var(--red-soft); }
+        .v3 .subhead { color: rgba(255,255,255,0.75); margin: 0 auto 32px; }
+
+        /* ============================================================
+           V4 — Green Accent (WhatsApp-branded feel)
+           Green divider, green accents, WhatsApp-forward
+           ============================================================ */
+        .v4 .ba-bg .ba-side-before { filter: brightness(0.38) saturate(0.4); }
+        .v4 .ba-bg .ba-side-after { filter: brightness(0.52); }
+        .v4 .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 5px; background: #25D366; z-index: 2; }
+        .v4 .eyebrow { color: #25D366; }
+        .v4 .headline { font-size: clamp(2.8rem, 6.5vw, 5rem); color: var(--white); text-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+        .v4 .text-green { color: #25D366; }
+        .v4 .subhead { color: rgba(255,255,255,0.8); margin: 0 auto 32px; }
+        .v4 .wa-note { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 16px; text-align: center; }
+
+        /* ============================================================
+           V5 — Stats Bar Below
+           Stat counters built into the overlay
+           ============================================================ */
+        .v5 .ba-bg .ba-side-before { filter: brightness(0.35) saturate(0.45); }
+        .v5 .ba-bg .ba-side-after { filter: brightness(0.5); }
+        .v5 .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: var(--red); z-index: 2; }
+        .v5 .eyebrow { color: var(--red-soft); }
+        .v5 .headline { font-size: clamp(2.8rem, 6.5vw, 5rem); color: var(--white); text-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+        .v5 .text-red { color: var(--red); }
+        .v5 .subhead { color: rgba(255,255,255,0.8); margin: 0 auto 32px; }
+        .v5 .stat-bar { display: flex; justify-content: center; gap: 48px; margin-top: 48px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.12); }
+        .v5 .stat-bar .stat strong { font-family: var(--font-display); font-size: 2.2rem; color: var(--white); display: block; }
+        .v5 .stat-bar .stat span { font-size: 0.78rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+        @media (max-width: 500px) { .v5 .stat-bar { gap: 24px; } .v5 .stat-bar .stat strong { font-size: 1.6rem; } }
+
+        /* ============================================================
+           V6 — Pill Badge + Softer Overlay
+           Lighter overlay, pill-shaped badge above headline
+           ============================================================ */
+        .v6 .ba-bg .ba-side-before { filter: brightness(0.42) saturate(0.5); }
+        .v6 .ba-bg .ba-side-after { filter: brightness(0.58) saturate(0.85); }
+        .v6 .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: var(--white); opacity: 0.25; z-index: 2; }
+        .v6 .pill-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 50px; font-family: var(--font-subhead); font-weight: 700; font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); margin-bottom: 20px; }
+        .v6 .pill-badge::before { content: ''; width: 8px; height: 8px; background: #25D366; border-radius: 50%; animation: dot-pulse 2s ease-in-out infinite; }
+        @keyframes dot-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .v6 .headline { font-size: clamp(2.8rem, 6.5vw, 5rem); color: var(--white); text-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+        .v6 .text-red { color: var(--red-soft); }
+        .v6 .subhead { color: rgba(255,255,255,0.82); margin: 0 auto 32px; }
+
+        /* ============================================================
+           V7 — Left-Aligned Text
+           Copy sits on the left over the "before" side
+           ============================================================ */
+        .v7 .ba-bg .ba-side-before { filter: brightness(0.28) saturate(0.3); }
+        .v7 .ba-bg .ba-side-after { filter: brightness(0.6) saturate(0.9); }
+        .v7 .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: var(--red); z-index: 2; }
+        .v7 .hero-overlay { text-align: left; margin: 0; max-width: 540px; }
+        .v7 .eyebrow { color: var(--red-soft); }
+        .v7 .headline { font-size: clamp(2.8rem, 6vw, 4.8rem); color: var(--white); text-shadow: 0 4px 30px rgba(0,0,0,0.6); }
+        .v7 .text-red { color: var(--red); }
+        .v7 .subhead { color: rgba(255,255,255,0.8); margin-bottom: 32px; }
+        .v7 .hero-buttons { justify-content: flex-start; }
+        .v7 .ba-label-left { position: absolute; bottom: 20px; left: 24px; font-family: var(--font-subhead); font-weight: 700; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); background: rgba(204,10,10,0.85); padding: 5px 12px; border-radius: 4px; z-index: 4; }
+        .v7 .ba-label-right { position: absolute; bottom: 20px; right: 24px; font-family: var(--font-subhead); font-weight: 700; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); background: rgba(37,211,102,0.85); padding: 5px 12px; border-radius: 4px; z-index: 4; }
+
+        /* ============================================================
+           V8 — Gradient Red Divider + Bold CTA
+           Thick gradient divider, oversized CTA
+           ============================================================ */
+        .v8 .ba-bg .ba-side-before { filter: brightness(0.35) saturate(0.4) contrast(1.1); }
+        .v8 .ba-bg .ba-side-after { filter: brightness(0.52) saturate(0.8); }
+        .v8 .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 8px; transform: translateX(-50%); background: linear-gradient(to bottom, var(--red), #ff4444, var(--red)); z-index: 2; }
+        .v8 .eyebrow { color: var(--red-soft); }
+        .v8 .headline { font-size: clamp(3.2rem, 7.5vw, 5.8rem); color: var(--white); text-shadow: 0 4px 40px rgba(0,0,0,0.6); }
+        .v8 .text-red { color: var(--red); }
+        .v8 .subhead { color: rgba(255,255,255,0.8); margin: 0 auto 36px; font-size: 1.2rem; }
+
+        /* ============================================================
+           V9 — Review Stars + Trust Strip
+           Stars and trust line above headline
+           ============================================================ */
+        .v9 .ba-bg .ba-side-before { filter: brightness(0.38) saturate(0.45); }
+        .v9 .ba-bg .ba-side-after { filter: brightness(0.55); }
+        .v9 .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: var(--red); z-index: 2; }
+        .v9 .trust-intro { margin-bottom: 20px; }
+        .v9 .stars { color: #f5a623; font-size: 1.5rem; letter-spacing: 3px; display: block; margin-bottom: 6px; }
+        .v9 .trust-text { color: rgba(255,255,255,0.6); font-size: 0.85rem; font-family: var(--font-subhead); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+        .v9 .headline { font-size: clamp(2.8rem, 6.5vw, 5rem); color: var(--white); text-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+        .v9 .text-red { color: var(--red); }
+        .v9 .subhead { color: rgba(255,255,255,0.8); margin: 0 auto 32px; }
+
+        /* ============================================================
+           V10 — Minimal / Clean
+           Very little UI chrome, maximum breathing room
+           ============================================================ */
+        .v10 .ba-bg .ba-side-before { filter: brightness(0.4) saturate(0.5); }
+        .v10 .ba-bg .ba-side-after { filter: brightness(0.55); }
+        .v10 .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: rgba(255,255,255,0.15); z-index: 2; }
+        .v10 .headline { font-size: clamp(3.2rem, 7.5vw, 6rem); color: var(--white); text-shadow: 0 4px 30px rgba(0,0,0,0.5); letter-spacing: 2px; }
+        .v10 .text-red { color: var(--red); }
+        .v10 .subhead { color: rgba(255,255,255,0.7); margin: 0 auto 40px; font-size: 1.2rem; }
+        .v10 .hero-buttons .btn { border-radius: 50px; }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="option-nav">
+        <div class="option-nav-inner">
+            <span class="option-nav-title">Split Screen Variations</span>
+            <a href="#v1">1</a><a href="#v2">2</a><a href="#v3">3</a><a href="#v4">4</a><a href="#v5">5</a>
+            <a href="#v6">6</a><a href="#v7">7</a><a href="#v8">8</a><a href="#v9">9</a><a href="#v10">10</a>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+         V1 — ORIGINAL BASELINE
+         ============================================================ -->
+    <div class="option-divider" id="v1" style="padding-top:100px;">
+        <span class="option-tag">Variation 1</span>
+        <h2>Original — Red Divider, Watermark Labels</h2>
+        <p>The baseline. Clean red divider, "BEFORE/AFTER" watermarks behind, centered headline.</p>
+    </div>
+    <section class="hero-split v1">
+        <div class="ba-bg">
+            <img src="images/wheelbefore.png" alt="" class="ba-side-before">
+            <img src="images/wheelafter.png" alt="" class="ba-side-after">
+            <div class="ba-divider"></div>
+            <span class="ba-watermark ba-watermark-l">BEFORE</span>
+            <span class="ba-watermark ba-watermark-r">AFTER</span>
+        </div>
+        <div class="container">
+            <div class="hero-overlay">
+                <span class="eyebrow">J. Calvin Alloy Wheel Refurbishment</span>
+                <h1 class="headline">See The Difference<br><span class="text-red">We Make</span></h1>
+                <p class="subhead">Kerb damage, corrosion, scratches — gone. WhatsApp us a photo of your wheels right now and we'll send your price back in minutes.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        Get Your Price Now
+                    </a>
+                    <a href="tel:+447500220669" class="btn btn-outline-light">Call 07500 220669</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         V2 — ANGLED DIVIDER + GOLD ACCENT
+         ============================================================ -->
+    <div class="option-divider" id="v2">
+        <span class="option-tag">Variation 2</span>
+        <h2>Angled Red Slash + Gold Accent</h2>
+        <p>Thick angled red divider slashes through the center. Gold accent colour for a premium automotive feel.</p>
+    </div>
+    <section class="hero-split v2">
+        <div class="ba-bg">
+            <img src="images/wheelbefore.png" alt="" class="ba-side-before">
+            <img src="images/wheelafter.png" alt="" class="ba-side-after">
+            <div class="ba-divider"></div>
+        </div>
+        <div class="container">
+            <div class="hero-overlay">
+                <span class="eyebrow">Coleraine's Alloy Wheel Specialists</span>
+                <h1 class="headline">Damaged Alloys<br>Don't Stand a <span class="text-accent">Chance</span></h1>
+                <p class="subhead">Diamond cut, powder coat, full restoration — we bring your wheels back to life. Send a photo on WhatsApp and get priced in minutes.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        WhatsApp Your Wheels
+                    </a>
+                    <a href="tel:+447500220669" class="btn btn-outline-light btn-sm">Call Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         V3 — URGENCY BANNER
+         ============================================================ -->
+    <div class="option-divider" id="v3">
+        <span class="option-tag">Variation 3</span>
+        <h2>Pulsing Urgency Banner</h2>
+        <p>Glowing red banner above headline creates FOMO. Darker overlay for max contrast. Seasonal angle.</p>
+    </div>
+    <section class="hero-split v3">
+        <div class="ba-bg">
+            <img src="images/wheelbefore.png" alt="" class="ba-side-before">
+            <img src="images/wheelafter.png" alt="" class="ba-side-after">
+            <div class="ba-divider"></div>
+        </div>
+        <div class="container">
+            <div class="hero-overlay">
+                <span class="top-banner">Limited Slots — Book This Week</span>
+                <h1 class="headline">Your Alloys Refurbished<br>To <span class="text-red">Factory Finish</span><br>In Days, Not Weeks</h1>
+                <p class="subhead">Slots fill fast — especially heading into summer. WhatsApp a photo now, get your price in minutes, lock in your spot.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        Grab Your Slot — Send a Photo
+                    </a>
+                    <a href="tel:+447500220669" class="btn btn-outline-light btn-sm">Call 07500 220669</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         V4 — WHATSAPP GREEN ACCENT
+         ============================================================ -->
+    <div class="option-divider" id="v4">
+        <span class="option-tag">Variation 4</span>
+        <h2>WhatsApp Green Accent</h2>
+        <p>Green divider line, green accents throughout. The whole hero screams "message us on WhatsApp."</p>
+    </div>
+    <section class="hero-split v4">
+        <div class="ba-bg">
+            <img src="images/wheelbefore.png" alt="" class="ba-side-before">
+            <img src="images/wheelafter.png" alt="" class="ba-side-after">
+            <div class="ba-divider"></div>
+        </div>
+        <div class="container">
+            <div class="hero-overlay">
+                <span class="eyebrow">Photo In. Price Back. That Simple.</span>
+                <h1 class="headline">Send Us Your Worst.<br>We'll Send It Back<br><span class="text-green">Looking Brand New.</span></h1>
+                <p class="subhead">Kerbed at Tesco? Winter salt corrosion? We've seen it all. Snap a photo, WhatsApp it over — your price lands in minutes, not days.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        Send Your Photo Now
+                    </a>
+                </div>
+                <p class="wa-note">No forms. No call-backs. Just your price.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         V5 — STATS BAR
+         ============================================================ -->
+    <div class="option-divider" id="v5">
+        <span class="option-tag">Variation 5</span>
+        <h2>Stats Bar Below CTA</h2>
+        <p>Social proof stats (wheels done, rating, turnaround) sit below the CTA as a trust strip. Numbers sell.</p>
+    </div>
+    <section class="hero-split v5">
+        <div class="ba-bg">
+            <img src="images/wheelbefore.png" alt="" class="ba-side-before">
+            <img src="images/wheelafter.png" alt="" class="ba-side-after">
+            <div class="ba-divider"></div>
+        </div>
+        <div class="container">
+            <div class="hero-overlay">
+                <span class="eyebrow">Alloy Wheel Refurbishment — Coleraine</span>
+                <h1 class="headline">Scuffed Alloys?<br>We'll Make Them<br><span class="text-red">Showroom Fresh</span></h1>
+                <p class="subhead">Send a quick photo on WhatsApp — we'll price it in minutes and have your wheels looking mint within the week. No messing about.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        Send Photo — Get Your Price
+                    </a>
+                    <a href="tel:+447500220669" class="btn btn-outline-light btn-sm">Call Now</a>
+                </div>
+                <div class="stat-bar">
+                    <div class="stat"><strong>1,000+</strong><span>Wheels Done</span></div>
+                    <div class="stat"><strong>5 ★</strong><span>Facebook Rating</span></div>
+                    <div class="stat"><strong>Same Week</strong><span>Turnaround</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         V6 — PILL BADGE + SOFTER FEEL
+         ============================================================ -->
+    <div class="option-divider" id="v6">
+        <span class="option-tag">Variation 6</span>
+        <h2>Pill Badge + Softer Overlay</h2>
+        <p>Lighter overlay lets more of the "after" wheel shine through. Pulsing green dot badge adds life without urgency pressure.</p>
+    </div>
+    <section class="hero-split v6">
+        <div class="ba-bg">
+            <img src="images/wheelbefore.png" alt="" class="ba-side-before">
+            <img src="images/wheelafter.png" alt="" class="ba-side-after">
+            <div class="ba-divider"></div>
+        </div>
+        <div class="container">
+            <div class="hero-overlay">
+                <span class="pill-badge">Now Taking Bookings</span>
+                <h1 class="headline">From Wrecked<br>To <span class="text-red">Remarkable</span></h1>
+                <p class="subhead">Professional alloy wheel refurbishment in Coleraine. Diamond cut, powder coat, full wheel restoration. WhatsApp a photo — your price in minutes.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        Send Photo — Get Priced
+                    </a>
+                    <a href="tel:+447500220669" class="btn btn-outline-light btn-sm">Call Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         V7 — LEFT-ALIGNED TEXT
+         ============================================================ -->
+    <div class="option-divider" id="v7">
+        <span class="option-tag">Variation 7</span>
+        <h2>Left-Aligned Over "Before"</h2>
+        <p>Copy sits left over the dark "before" side. The clean "after" wheel is clearly visible on the right. Before/After labels at the bottom.</p>
+    </div>
+    <section class="hero-split v7">
+        <div class="ba-bg">
+            <img src="images/wheelbefore.png" alt="" class="ba-side-before">
+            <img src="images/wheelafter.png" alt="" class="ba-side-after">
+            <div class="ba-divider"></div>
+            <span class="ba-label-left">Before</span>
+            <span class="ba-label-right">After</span>
+        </div>
+        <div class="container">
+            <div class="hero-overlay">
+                <span class="eyebrow">Alloy Wheel Refurbishment — Coleraine</span>
+                <h1 class="headline">This Is What We Do.<br><span class="text-red">Every. Single. Day.</span></h1>
+                <p class="subhead">Corroded, kerbed, scratched — doesn't matter. We'll have your alloys looking factory-fresh. Send a photo, get your price. Done.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        WhatsApp Your Wheels
+                    </a>
+                    <a href="tel:+447500220669" class="btn btn-outline-light btn-sm">Call Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         V8 — THICK GRADIENT DIVIDER + BIG HEADLINE
+         ============================================================ -->
+    <div class="option-divider" id="v8">
+        <span class="option-tag">Variation 8</span>
+        <h2>Gradient Divider + Oversized Headline</h2>
+        <p>Thick red-to-bright gradient divider. Extra-large headline for maximum punch. The ego/pride angle.</p>
+    </div>
+    <section class="hero-split v8">
+        <div class="ba-bg">
+            <img src="images/wheelbefore.png" alt="" class="ba-side-before">
+            <img src="images/wheelafter.png" alt="" class="ba-side-after">
+            <div class="ba-divider"></div>
+        </div>
+        <div class="container">
+            <div class="hero-overlay">
+                <span class="eyebrow">J. Calvin — Coleraine</span>
+                <h1 class="headline">Your Car Deserves<br><span class="text-red">Better Wheels</span></h1>
+                <p class="subhead">People notice your alloys more than you think. Kerbed, corroded wheels drag the whole car down. We fix that — fast. WhatsApp a photo, get your price today.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        Send Photo — Get Your Price
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         V9 — REVIEW STARS + TRUST
+         ============================================================ -->
+    <div class="option-divider" id="v9">
+        <span class="option-tag">Variation 9</span>
+        <h2>Trust-Led — Stars Above Headline</h2>
+        <p>Five gold stars and a trust line sit above the headline. Builds credibility before the pitch even starts.</p>
+    </div>
+    <section class="hero-split v9">
+        <div class="ba-bg">
+            <img src="images/wheelbefore.png" alt="" class="ba-side-before">
+            <img src="images/wheelafter.png" alt="" class="ba-side-after">
+            <div class="ba-divider"></div>
+        </div>
+        <div class="container">
+            <div class="hero-overlay">
+                <div class="trust-intro">
+                    <span class="stars">★★★★★</span>
+                    <span class="trust-text">Rated 5 Stars &bull; 1,000+ Wheels Refurbished</span>
+                </div>
+                <h1 class="headline">Alloy Refurbishment<br>You Can Actually<br><span class="text-red">See &amp; Feel</span></h1>
+                <p class="subhead">Not a touch-up — a proper refurbishment. Diamond cut, powder coat, full restoration. WhatsApp us a photo of your wheels and we'll price them in minutes.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        Get Your Price — WhatsApp Us
+                    </a>
+                    <a href="tel:+447500220669" class="btn btn-outline-light btn-sm">Call 07500 220669</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         V10 — MINIMAL / CLEAN
+         ============================================================ -->
+    <div class="option-divider" id="v10">
+        <span class="option-tag">Variation 10</span>
+        <h2>Ultra Minimal — Let The Wheels Talk</h2>
+        <p>Subtle divider, maximum white space around the headline. Pill-shaped buttons. Fewest words — the transformation does the talking.</p>
+    </div>
+    <section class="hero-split v10">
+        <div class="ba-bg">
+            <img src="images/wheelbefore.png" alt="" class="ba-side-before">
+            <img src="images/wheelafter.png" alt="" class="ba-side-after">
+            <div class="ba-divider"></div>
+        </div>
+        <div class="container">
+            <div class="hero-overlay">
+                <h1 class="headline">Before. <span class="text-red">After.</span><br>That's It.</h1>
+                <p class="subhead">Alloy wheel refurbishment in Coleraine. Send a photo. Get your price. Same-week turnaround.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        WhatsApp Us
+                    </a>
+                    <a href="tel:+447500220669" class="btn btn-outline-light">Call</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- END -->
+    <div style="background:var(--charcoal);padding:80px 20px;text-align:center;">
+        <p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">J. Calvin — Split Screen Hero Variations. Pick your favourite.</p>
+    </div>
+
+</body>
+</html>

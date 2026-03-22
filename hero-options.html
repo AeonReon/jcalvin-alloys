@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J Calvin — Hero Section Options</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #CC0A0A;
+            --red-dark: #a80808;
+            --red-soft: #e8302f;
+            --charcoal: #1e1e1e;
+            --dark-section: #1a1a1e;
+            --slate: #2c2c30;
+            --white: #ffffff;
+            --off-white: #f7f6f4;
+            --warm-grey: #eceae6;
+            --light-section: #f4f2ef;
+            --text-dark: #222222;
+            --text-body: #444444;
+            --text-mid: #666666;
+            --text-light: #888888;
+            --text-on-dark: #d4d4d4;
+            --border-light: rgba(0,0,0,0.08);
+            --border-dark: rgba(255,255,255,0.1);
+            --font-display: 'Bebas Neue', sans-serif;
+            --font-subhead: 'Barlow Condensed', sans-serif;
+            --font-body: 'Barlow', sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--charcoal); color: var(--text-body); line-height: 1.7; overflow-x: hidden; }
+        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+        .text-red { color: var(--red); }
+
+        /* NAV between heroes */
+        .option-nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(30,30,30,0.95); backdrop-filter: blur(10px); z-index: 9999; padding: 12px 0; border-bottom: 2px solid var(--red); }
+        .option-nav .container { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .option-nav-title { font-family: var(--font-display); font-size: 1.3rem; color: var(--white); letter-spacing: 1px; margin-right: 12px; white-space: nowrap; }
+        .option-nav a { font-family: var(--font-subhead); font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.08); padding: 6px 14px; border-radius: 4px; transition: all 0.2s; white-space: nowrap; }
+        .option-nav a:hover { color: var(--white); background: var(--red); }
+
+        /* Divider between options */
+        .option-divider { background: var(--charcoal); padding: 60px 0 20px; text-align: center; }
+        .option-divider h2 { font-family: var(--font-display); font-size: 2.5rem; color: var(--white); letter-spacing: 2px; }
+        .option-divider p { color: var(--text-light); font-size: 0.95rem; max-width: 600px; margin: 8px auto 0; }
+        .option-divider .option-tag { display: inline-block; background: var(--red); color: var(--white); font-family: var(--font-subhead); font-weight: 700; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 4px; margin-bottom: 12px; }
+
+        /* BUTTONS */
+        .btn { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-subhead); font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase; padding: 16px 36px; border-radius: 6px; border: none; cursor: pointer; transition: all 0.3s ease; text-decoration: none; }
+        .btn-primary { background: var(--red); color: var(--white); box-shadow: 0 4px 16px rgba(204,10,10,0.25); }
+        .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(204,10,10,0.35); }
+        .btn-whatsapp { background: #25D366; color: var(--white); box-shadow: 0 4px 16px rgba(37,211,102,0.25); }
+        .btn-whatsapp:hover { background: #1fb855; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(37,211,102,0.35); }
+        .btn-outline-light { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.5); }
+        .btn-outline-light:hover { background: var(--white); color: var(--charcoal); }
+        .btn-outline-dark { background: transparent; color: var(--text-dark); border: 2px solid var(--text-dark); }
+        .btn-outline-dark:hover { background: var(--text-dark); color: var(--white); }
+        .btn svg { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
+        .btn-sm { font-size: 0.95rem; padding: 12px 24px; }
+
+        .eyebrow { font-family: var(--font-subhead); font-weight: 700; font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 12px; display: inline-block; }
+        .headline { font-family: var(--font-display); line-height: 1.05; letter-spacing: 1px; margin-bottom: 20px; }
+        .subhead { font-family: var(--font-body); font-size: 1.15rem; font-weight: 400; line-height: 1.7; max-width: 600px; }
+
+        /* WhatsApp icon SVG reusable */
+        .wa-icon { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; }
+
+        /* ============================================================
+           HERO OPTION 1 — SPLIT SCREEN BEFORE/AFTER
+           ============================================================ */
+        .hero-1 { min-height: 92vh; display: flex; align-items: center; background: var(--dark-section); position: relative; overflow: hidden; padding: 80px 0; }
+        .hero-1 .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .hero-1 .hero-copy { z-index: 2; }
+        .hero-1 .headline { font-size: clamp(2.8rem, 6vw, 4.8rem); color: var(--white); }
+        .hero-1 .subhead { color: rgba(255,255,255,0.75); margin-bottom: 32px; }
+        .hero-1 .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero-1 .ba-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; border-radius: 12px; overflow: hidden; position: relative; }
+        .hero-1 .ba-wrapper img { width: 100%; height: 380px; object-fit: cover; }
+        .hero-1 .ba-label { position: absolute; bottom: 12px; font-family: var(--font-subhead); font-weight: 700; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); padding: 6px 14px; border-radius: 4px; z-index: 3; }
+        .hero-1 .ba-label-before { left: 12px; background: rgba(204,10,10,0.9); }
+        .hero-1 .ba-label-after { right: 12px; background: rgba(37,211,102,0.9); }
+        .hero-1 .hero-stat-row { display: flex; gap: 36px; margin-top: 40px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .hero-1 .hero-stat strong { font-family: var(--font-display); font-size: 1.8rem; color: var(--white); display: block; }
+        .hero-1 .hero-stat span { font-size: 0.8rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+        @media (max-width: 768px) {
+            .hero-1 .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+            .hero-1 .ba-wrapper img { height: 220px; }
+        }
+
+        /* ============================================================
+           HERO OPTION 2 — CENTERED IMPACT (before/after stacked under headline)
+           ============================================================ */
+        .hero-2 { min-height: 92vh; display: flex; align-items: center; background: linear-gradient(180deg, #111114 0%, var(--dark-section) 100%); padding: 80px 0; text-align: center; }
+        .hero-2 .headline { font-size: clamp(3rem, 7vw, 5.5rem); color: var(--white); max-width: 900px; margin-left: auto; margin-right: auto; }
+        .hero-2 .subhead { color: rgba(255,255,255,0.7); margin: 0 auto 36px; max-width: 560px; }
+        .hero-2 .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+        .hero-2 .ba-compare { display: flex; gap: 6px; max-width: 700px; margin: 0 auto; border-radius: 14px; overflow: hidden; position: relative; }
+        .hero-2 .ba-compare img { width: 50%; height: 340px; object-fit: cover; }
+        .hero-2 .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 6px; background: var(--red); transform: translateX(-50%); z-index: 2; }
+        .hero-2 .ba-divider::after { content: '→'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--red); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.2rem; font-weight: 700; }
+        .hero-2 .ba-tag { position: absolute; top: 16px; font-family: var(--font-subhead); font-weight: 700; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); padding: 5px 12px; border-radius: 4px; z-index: 3; }
+        .hero-2 .ba-tag-before { left: 16px; background: rgba(204,10,10,0.85); }
+        .hero-2 .ba-tag-after { right: 16px; background: rgba(37,211,102,0.85); }
+        @media (max-width: 600px) {
+            .hero-2 .ba-compare img { height: 220px; }
+        }
+
+        /* ============================================================
+           HERO OPTION 3 — LIGHT BACKGROUND, DARK TEXT, SIDE-BY-SIDE
+           ============================================================ */
+        .hero-3 { min-height: 88vh; display: flex; align-items: center; background: var(--light-section); padding: 80px 0; }
+        .hero-3 .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .hero-3 .headline { font-size: clamp(2.6rem, 5.5vw, 4.4rem); color: var(--text-dark); }
+        .hero-3 .subhead { color: var(--text-mid); margin-bottom: 28px; }
+        .hero-3 .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+        .hero-3 .trust-row { display: flex; align-items: center; gap: 24px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border-light); }
+        .hero-3 .trust-row .stars { color: #f5a623; font-size: 1.2rem; letter-spacing: 2px; }
+        .hero-3 .trust-row span { font-size: 0.85rem; color: var(--text-light); }
+        .hero-3 .ba-stack { position: relative; }
+        .hero-3 .ba-stack .before-img { width: 100%; height: 400px; object-fit: cover; border-radius: 12px; filter: saturate(0.6); }
+        .hero-3 .ba-stack .after-img { position: absolute; bottom: -20px; right: -20px; width: 55%; height: 260px; object-fit: cover; border-radius: 12px; border: 4px solid var(--light-section); box-shadow: 0 12px 40px rgba(0,0,0,0.2); }
+        .hero-3 .ba-stack .after-badge { position: absolute; bottom: -10px; right: -10px; background: #25D366; color: var(--white); font-family: var(--font-subhead); font-weight: 700; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; padding: 6px 14px; border-radius: 4px; }
+        .hero-3 .ba-stack .before-badge { position: absolute; top: 16px; left: 16px; background: var(--red); color: var(--white); font-family: var(--font-subhead); font-weight: 700; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; padding: 6px 14px; border-radius: 4px; }
+        @media (max-width: 768px) {
+            .hero-3 .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+            .hero-3 .ba-stack .before-img { height: 280px; }
+            .hero-3 .ba-stack .after-img { width: 50%; height: 180px; }
+        }
+
+        /* ============================================================
+           HERO OPTION 4 — FULL-WIDTH BEFORE/AFTER WITH OVERLAY TEXT
+           ============================================================ */
+        .hero-4 { min-height: 92vh; display: flex; align-items: center; position: relative; overflow: hidden; padding: 80px 0; }
+        .hero-4 .ba-bg { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; }
+        .hero-4 .ba-bg img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-4 .ba-bg .ba-side-before { filter: brightness(0.4) saturate(0.5); }
+        .hero-4 .ba-bg .ba-side-after { filter: brightness(0.55); }
+        .hero-4 .ba-bg-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: var(--red); z-index: 2; }
+        .hero-4 .ba-bg-label { position: absolute; top: 50%; transform: translateY(-50%); font-family: var(--font-display); font-size: clamp(3rem, 8vw, 7rem); color: rgba(255,255,255,0.08); letter-spacing: 8px; z-index: 1; }
+        .hero-4 .ba-bg-label-before { left: 40px; }
+        .hero-4 .ba-bg-label-after { right: 40px; }
+        .hero-4 .hero-overlay { position: relative; z-index: 3; text-align: center; max-width: 760px; margin: 0 auto; }
+        .hero-4 .headline { font-size: clamp(3rem, 7vw, 5.4rem); color: var(--white); text-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+        .hero-4 .subhead { color: rgba(255,255,255,0.85); margin: 0 auto 32px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .hero-4 .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        /* ============================================================
+           HERO OPTION 5 — WHATSAPP-FIRST CTA (conversational)
+           ============================================================ */
+        .hero-5 { min-height: 92vh; display: flex; align-items: center; background: var(--dark-section); padding: 80px 0; }
+        .hero-5 .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 50px; align-items: center; }
+        .hero-5 .headline { font-size: clamp(2.6rem, 5.5vw, 4.2rem); color: var(--white); }
+        .hero-5 .subhead { color: rgba(255,255,255,0.7); margin-bottom: 12px; }
+        .hero-5 .wa-steps { list-style: none; margin: 20px 0 32px; }
+        .hero-5 .wa-steps li { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; color: rgba(255,255,255,0.85); font-size: 1.05rem; }
+        .hero-5 .wa-steps .step-num { width: 32px; height: 32px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.1rem; color: var(--white); flex-shrink: 0; }
+        .hero-5 .wa-big-btn { display: flex; align-items: center; gap: 16px; background: #25D366; color: var(--white); padding: 20px 40px; border-radius: 10px; font-family: var(--font-subhead); font-weight: 700; font-size: 1.3rem; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 6px 24px rgba(37,211,102,0.3); transition: all 0.3s; }
+        .hero-5 .wa-big-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(37,211,102,0.45); }
+        .hero-5 .wa-big-btn svg { width: 28px; height: 28px; fill: currentColor; }
+        .hero-5 .wa-note { color: rgba(255,255,255,0.45); font-size: 0.82rem; margin-top: 12px; }
+        .hero-5 .ba-wrapper { border-radius: 14px; overflow: hidden; position: relative; }
+        .hero-5 .ba-wrapper img { width: 100%; height: 420px; object-fit: cover; }
+        .hero-5 .ba-wrapper .ba-slider { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+        .hero-5 .ba-tag { position: absolute; bottom: 14px; font-family: var(--font-subhead); font-weight: 700; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); padding: 5px 12px; border-radius: 4px; }
+        .hero-5 .ba-tag-before { left: 14px; background: rgba(204,10,10,0.9); }
+        .hero-5 .ba-tag-after { right: 14px; background: rgba(37,211,102,0.9); }
+        @media (max-width: 768px) {
+            .hero-5 .hero-grid { grid-template-columns: 1fr; }
+            .hero-5 .ba-wrapper img { height: 240px; }
+        }
+
+        /* ============================================================
+           HERO OPTION 6 — PRICE ANCHOR (comparison value)
+           ============================================================ */
+        .hero-6 { min-height: 90vh; display: flex; align-items: center; background: var(--white); padding: 80px 0; }
+        .hero-6 .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .hero-6 .headline { font-size: clamp(2.6rem, 5.5vw, 4.4rem); color: var(--text-dark); }
+        .hero-6 .price-compare { display: flex; gap: 20px; margin: 24px 0 32px; }
+        .hero-6 .price-box { padding: 16px 24px; border-radius: 8px; text-align: center; flex: 1; }
+        .hero-6 .price-box-old { background: #fef2f2; border: 1px solid #fecaca; }
+        .hero-6 .price-box-new { background: #f0fdf4; border: 1px solid #bbf7d0; }
+        .hero-6 .price-box .price-label { font-family: var(--font-subhead); font-weight: 700; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+        .hero-6 .price-box-old .price-label { color: var(--red); }
+        .hero-6 .price-box-new .price-label { color: #16a34a; }
+        .hero-6 .price-box .price-amount { font-family: var(--font-display); font-size: 2.2rem; }
+        .hero-6 .price-box-old .price-amount { color: var(--red); text-decoration: line-through; }
+        .hero-6 .price-box-new .price-amount { color: #16a34a; }
+        .hero-6 .subhead { color: var(--text-mid); margin-bottom: 28px; }
+        .hero-6 .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+        .hero-6 .ba-wrapper { border-radius: 14px; overflow: hidden; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+        .hero-6 .ba-wrapper .ba-slider { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+        .hero-6 .ba-wrapper img { width: 100%; height: 380px; object-fit: cover; }
+        .hero-6 .ba-tag { position: absolute; bottom: 14px; font-family: var(--font-subhead); font-weight: 700; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); padding: 5px 12px; border-radius: 4px; }
+        .hero-6 .ba-tag-before { left: 14px; background: rgba(204,10,10,0.9); }
+        .hero-6 .ba-tag-after { right: 14px; background: rgba(37,211,102,0.9); }
+        @media (max-width: 768px) {
+            .hero-6 .hero-grid { grid-template-columns: 1fr; }
+            .hero-6 .price-compare { flex-direction: row; }
+            .hero-6 .ba-wrapper img { height: 220px; }
+        }
+
+        /* ============================================================
+           HERO OPTION 7 — URGENCY / SEASONAL
+           ============================================================ */
+        .hero-7 { min-height: 92vh; display: flex; align-items: center; background: linear-gradient(135deg, #111114 0%, #1a1a2e 100%); padding: 80px 0; position: relative; overflow: hidden; }
+        .hero-7::before { content: ''; position: absolute; top: -50%; right: -20%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(204,10,10,0.12) 0%, transparent 70%); z-index: 0; }
+        .hero-7 .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+        .hero-7 .urgency-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--red); padding: 8px 18px; border-radius: 50px; font-family: var(--font-subhead); font-weight: 700; font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); margin-bottom: 20px; animation: pulse-badge 2s ease-in-out infinite; }
+        @keyframes pulse-badge { 0%, 100% { box-shadow: 0 0 0 0 rgba(204,10,10,0.4); } 50% { box-shadow: 0 0 0 12px rgba(204,10,10,0); } }
+        .hero-7 .headline { font-size: clamp(2.6rem, 6vw, 4.6rem); color: var(--white); }
+        .hero-7 .subhead { color: rgba(255,255,255,0.7); margin-bottom: 32px; }
+        .hero-7 .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+        .hero-7 .ba-wrapper { border-radius: 14px; overflow: hidden; position: relative; border: 2px solid rgba(255,255,255,0.08); }
+        .hero-7 .ba-wrapper .ba-slider { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+        .hero-7 .ba-wrapper img { width: 100%; height: 400px; object-fit: cover; }
+        .hero-7 .ba-tag { position: absolute; bottom: 14px; font-family: var(--font-subhead); font-weight: 700; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); padding: 5px 12px; border-radius: 4px; }
+        .hero-7 .ba-tag-before { left: 14px; background: rgba(204,10,10,0.9); }
+        .hero-7 .ba-tag-after { right: 14px; background: rgba(37,211,102,0.9); }
+        @media (max-width: 768px) {
+            .hero-7 .hero-grid { grid-template-columns: 1fr; }
+            .hero-7 .ba-wrapper img { height: 240px; }
+        }
+
+        /* ============================================================
+           HERO OPTION 8 — TESTIMONIAL-LED
+           ============================================================ */
+        .hero-8 { min-height: 92vh; display: flex; align-items: center; background: var(--light-section); padding: 80px 0; }
+        .hero-8 .hero-inner { text-align: center; max-width: 840px; margin: 0 auto; }
+        .hero-8 .review-lead { font-family: var(--font-body); font-size: 1.3rem; font-style: italic; color: var(--text-mid); max-width: 600px; margin: 0 auto 8px; line-height: 1.7; }
+        .hero-8 .review-author { font-family: var(--font-subhead); font-weight: 700; font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); margin-bottom: 8px; }
+        .hero-8 .stars { color: #f5a623; font-size: 1.3rem; letter-spacing: 2px; margin-bottom: 28px; display: block; }
+        .hero-8 .headline { font-size: clamp(2.8rem, 6.5vw, 5rem); color: var(--text-dark); }
+        .hero-8 .subhead { color: var(--text-mid); margin: 0 auto 32px; }
+        .hero-8 .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+        .hero-8 .ba-compare { display: flex; gap: 6px; max-width: 640px; margin: 0 auto; border-radius: 14px; overflow: hidden; position: relative; box-shadow: 0 16px 48px rgba(0,0,0,0.12); }
+        .hero-8 .ba-compare img { width: 50%; height: 300px; object-fit: cover; }
+        .hero-8 .ba-tag { position: absolute; bottom: 12px; font-family: var(--font-subhead); font-weight: 700; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); padding: 5px 12px; border-radius: 4px; }
+        .hero-8 .ba-tag-before { left: 12px; background: rgba(204,10,10,0.9); }
+        .hero-8 .ba-tag-after { right: 12px; background: rgba(37,211,102,0.9); }
+        @media (max-width: 600px) {
+            .hero-8 .ba-compare img { height: 200px; }
+        }
+
+        /* ============================================================
+           HERO OPTION 9 — BOLD DARK, SINGLE WHEEL FOCUS WITH REVEAL
+           ============================================================ */
+        .hero-9 { min-height: 92vh; display: flex; align-items: center; background: #0e0e12; padding: 80px 0; position: relative; overflow: hidden; }
+        .hero-9::after { content: ''; position: absolute; bottom: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 400px; background: radial-gradient(ellipse, rgba(204,10,10,0.08), transparent 70%); }
+        .hero-9 .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+        .hero-9 .headline { font-size: clamp(2.8rem, 6vw, 4.8rem); color: var(--white); }
+        .hero-9 .subhead { color: rgba(255,255,255,0.65); margin-bottom: 32px; }
+        .hero-9 .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+        .hero-9 .ba-reveal { position: relative; }
+        .hero-9 .ba-reveal .after-wheel { width: 100%; height: 420px; object-fit: cover; border-radius: 14px; }
+        .hero-9 .ba-reveal .before-wheel { position: absolute; top: 20px; left: -30px; width: 45%; height: 250px; object-fit: cover; border-radius: 10px; border: 3px solid rgba(204,10,10,0.6); box-shadow: 0 8px 30px rgba(0,0,0,0.4); opacity: 0.85; }
+        .hero-9 .ba-reveal .arrow-label { position: absolute; top: 50%; left: 30%; transform: translate(-50%, -50%); font-family: var(--font-display); font-size: 2.5rem; color: var(--red); }
+        .hero-9 .ba-tag { position: absolute; font-family: var(--font-subhead); font-weight: 700; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); padding: 5px 12px; border-radius: 4px; }
+        .hero-9 .ba-tag-before { position: absolute; top: 8px; left: -18px; background: rgba(204,10,10,0.9); z-index: 2; }
+        .hero-9 .ba-tag-after { position: absolute; bottom: 14px; right: 14px; background: rgba(37,211,102,0.9); }
+        .hero-9 .guarantee-strip { display: flex; align-items: center; gap: 12px; margin-top: 28px; padding: 14px 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; }
+        .hero-9 .guarantee-strip span { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+        .hero-9 .guarantee-strip strong { color: var(--white); }
+        @media (max-width: 768px) {
+            .hero-9 .hero-grid { grid-template-columns: 1fr; }
+            .hero-9 .ba-reveal .after-wheel { height: 300px; }
+            .hero-9 .ba-reveal .before-wheel { width: 40%; height: 160px; }
+        }
+
+        /* ============================================================
+           HERO OPTION 10 — MINIMAL / PREMIUM (white space)
+           ============================================================ */
+        .hero-10 { min-height: 88vh; display: flex; align-items: center; background: var(--white); padding: 100px 0 80px; }
+        .hero-10 .hero-inner { text-align: center; }
+        .hero-10 .logo-hero { height: 60px; margin: 0 auto 32px; }
+        .hero-10 .headline { font-size: clamp(2.8rem, 6.5vw, 5.2rem); color: var(--text-dark); max-width: 780px; margin-left: auto; margin-right: auto; }
+        .hero-10 .subhead { color: var(--text-mid); margin: 0 auto 36px; max-width: 520px; }
+        .hero-10 .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 56px; }
+        .hero-10 .ba-showcase { display: flex; gap: 32px; justify-content: center; align-items: flex-end; max-width: 800px; margin: 0 auto; }
+        .hero-10 .ba-card { text-align: center; flex: 1; max-width: 340px; }
+        .hero-10 .ba-card img { width: 100%; height: 320px; object-fit: cover; border-radius: 14px; margin-bottom: 12px; }
+        .hero-10 .ba-card .ba-card-label { font-family: var(--font-subhead); font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; }
+        .hero-10 .ba-card-before .ba-card-label { color: var(--red); }
+        .hero-10 .ba-card-after .ba-card-label { color: #25D366; }
+        .hero-10 .ba-arrow { font-family: var(--font-display); font-size: 2.5rem; color: var(--red); margin-bottom: 160px; flex-shrink: 0; }
+        @media (max-width: 700px) {
+            .hero-10 .ba-showcase { flex-direction: column; align-items: center; gap: 12px; }
+            .hero-10 .ba-card img { height: 240px; }
+            .hero-10 .ba-arrow { margin-bottom: 0; transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="option-nav">
+        <div class="container">
+            <span class="option-nav-title">J.Calvin Hero Options</span>
+            <a href="#option1">1</a>
+            <a href="#option2">2</a>
+            <a href="#option3">3</a>
+            <a href="#option4">4</a>
+            <a href="#option5">5</a>
+            <a href="#option6">6</a>
+            <a href="#option7">7</a>
+            <a href="#option8">8</a>
+            <a href="#option9">9</a>
+            <a href="#option10">10</a>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+         OPTION 1 — SPLIT SCREEN BEFORE/AFTER
+         "The transformation speaks for itself"
+         ============================================================ -->
+    <div class="option-divider" id="option1" style="padding-top:100px;">
+        <span class="option-tag">Option 1</span>
+        <h2>Split Screen Before/After</h2>
+        <p>Side-by-side layout — copy on the left, dramatic before/after on the right. The transformation does the heavy lifting.</p>
+    </div>
+    <section class="hero-1">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-copy">
+                    <span class="eyebrow" style="color:var(--red-soft);">Alloy Wheel Refurbishment — Coleraine</span>
+                    <h1 class="headline">From Kerbed &amp; Corroded<br>To <span class="text-red">Showroom Finish</span></h1>
+                    <p class="subhead">Send a photo of your wheels on WhatsApp. We'll price it in minutes — and have them looking factory-fresh within the week.</p>
+                    <div class="hero-buttons">
+                        <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                            Send Photo — Get Your Price
+                        </a>
+                        <a href="tel:+447500220669" class="btn btn-outline-light">Call Now</a>
+                    </div>
+                    <div class="hero-stat-row">
+                        <div class="hero-stat"><strong>1000+</strong><span>Wheels Done</span></div>
+                        <div class="hero-stat"><strong>5★</strong><span>Rated</span></div>
+                        <div class="hero-stat"><strong>Same Week</strong><span>Turnaround</span></div>
+                    </div>
+                </div>
+                <div class="ba-wrapper">
+                    <div class="ba-slider">
+                        <img src="images/wheelbefore.png" alt="Alloy wheel before refurbishment — corroded and scuffed">
+                        <img src="images/wheelafter.png" alt="Alloy wheel after refurbishment — showroom finish">
+                    </div>
+                    <span class="ba-label ba-label-before">Before</span>
+                    <span class="ba-label ba-label-after">After</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         OPTION 2 — CENTERED IMPACT
+         "Big bold headline, before/after below"
+         ============================================================ -->
+    <div class="option-divider" id="option2">
+        <span class="option-tag">Option 2</span>
+        <h2>Centered Impact</h2>
+        <p>Maximum headline punch. Centered text, CTA front and center, before/after comparison below as proof.</p>
+    </div>
+    <section class="hero-2">
+        <div class="container">
+            <span class="eyebrow" style="color:var(--red-soft);">Coleraine's Alloy Wheel Specialists</span>
+            <h1 class="headline">Your Wheels Deserve<br>A <span class="text-red">Second Chance</span></h1>
+            <p class="subhead">Scuffed, kerbed or corroded — we'll bring them back to factory condition. Snap a photo, WhatsApp it over, get your price in minutes. It's that simple.</p>
+            <div class="hero-buttons">
+                <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                    WhatsApp Us Your Wheels
+                </a>
+                <a href="tel:+447500220669" class="btn btn-outline-light">Call 07500 220669</a>
+            </div>
+            <div class="ba-compare">
+                <img src="images/wheelbefore.png" alt="Before — damaged alloy wheel">
+                <img src="images/wheelafter.png" alt="After — refurbished alloy wheel">
+                <div class="ba-divider"></div>
+                <span class="ba-tag ba-tag-before">Before</span>
+                <span class="ba-tag ba-tag-after">After</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         OPTION 3 — LIGHT BACKGROUND, OVERLAPPING IMAGES
+         "Clean, premium, trust-forward"
+         ============================================================ -->
+    <div class="option-divider" id="option3">
+        <span class="option-tag">Option 3</span>
+        <h2>Light &amp; Premium</h2>
+        <p>Light background, dark text. Before image faded behind, after image overlapping in front. Clean and trustworthy.</p>
+    </div>
+    <section class="hero-3">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <span class="eyebrow">Professional Alloy Wheel Refurbishment</span>
+                    <h1 class="headline">Don't Replace Your Alloys.<br><span class="text-red">Refurbish Them.</span></h1>
+                    <p class="subhead">Same-week turnaround, fraction of the cost of new wheels. Diamond cut, powder coat, full restoration — all done in Coleraine.</p>
+                    <div class="hero-buttons">
+                        <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                            Send a Photo — Get Your Price
+                        </a>
+                        <a href="tel:+447500220669" class="btn btn-outline-dark btn-sm">Call Us</a>
+                    </div>
+                    <div class="trust-row">
+                        <span class="stars">★★★★★</span>
+                        <span>Rated 5 stars on Facebook &bull; 1,000+ wheels refurbished</span>
+                    </div>
+                </div>
+                <div class="ba-stack">
+                    <img src="images/wheelbefore.png" alt="Before refurbishment" class="before-img">
+                    <img src="images/wheelafter.png" alt="After refurbishment" class="after-img">
+                    <span class="before-badge">Before</span>
+                    <span class="after-badge">After</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         OPTION 4 — FULL-WIDTH BEFORE/AFTER BACKGROUND
+         "Cinematic split — the image IS the hero"
+         ============================================================ -->
+    <div class="option-divider" id="option4">
+        <span class="option-tag">Option 4</span>
+        <h2>Full-Width Split Background</h2>
+        <p>The before/after images ARE the background — darkened, split down the middle. Copy overlays the center. Maximum visual drama.</p>
+    </div>
+    <section class="hero-4">
+        <div class="ba-bg">
+            <img src="images/wheelbefore.png" alt="" class="ba-side-before">
+            <img src="images/wheelafter.png" alt="" class="ba-side-after">
+            <div class="ba-bg-divider"></div>
+            <span class="ba-bg-label ba-bg-label-before">BEFORE</span>
+            <span class="ba-bg-label ba-bg-label-after">AFTER</span>
+        </div>
+        <div class="container">
+            <div class="hero-overlay">
+                <span class="eyebrow" style="color:var(--red-soft);">J. Calvin Alloy Wheel Refurbishment</span>
+                <h1 class="headline">See The Difference<br><span class="text-red">We Make</span></h1>
+                <p class="subhead">Kerb damage, corrosion, scratches — gone. WhatsApp us a photo of your wheels right now and we'll send your price back in minutes. No messing about.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        Get Your Price Now
+                    </a>
+                    <a href="tel:+447500220669" class="btn btn-outline-light">Call 07500 220669</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         OPTION 5 — WHATSAPP-FIRST (Conversational)
+         "The entire hero is built around the WhatsApp flow"
+         ============================================================ -->
+    <div class="option-divider" id="option5">
+        <span class="option-tag">Option 5</span>
+        <h2>WhatsApp-First Flow</h2>
+        <p>Makes WhatsApp the entire point. Three steps shown right in the hero — snap, send, sorted. Giant green CTA.</p>
+    </div>
+    <section class="hero-5">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <span class="eyebrow" style="color:var(--red-soft);">The Fastest Quote in Northern Ireland</span>
+                    <h1 class="headline">Snap Your Wheels.<br>WhatsApp Us.<br><span class="text-red">Get Your Price in Minutes.</span></h1>
+                    <p class="subhead">No forms, no waiting, no call-backs. Just send us a photo — we'll reply with your price before you finish your coffee.</p>
+                    <ol class="wa-steps">
+                        <li><span class="step-num">1</span> Take a photo of each wheel</li>
+                        <li><span class="step-num">2</span> Send it to us on WhatsApp</li>
+                        <li><span class="step-num">3</span> Get your price back in minutes</li>
+                    </ol>
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="wa-big-btn">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        Send Your Photo Now
+                    </a>
+                    <p class="wa-note">No spam, no sales pitch — just your price.</p>
+                </div>
+                <div class="ba-wrapper">
+                    <div class="ba-slider">
+                        <img src="images/wheelbefore.png" alt="Before — damaged wheel">
+                        <img src="images/wheelafter.png" alt="After — refurbished wheel">
+                    </div>
+                    <span class="ba-tag ba-tag-before">Before</span>
+                    <span class="ba-tag ba-tag-after">After</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         OPTION 6 — PRICE ANCHOR
+         "New wheel cost vs refurb cost — the money angle"
+         ============================================================ -->
+    <div class="option-divider" id="option6">
+        <span class="option-tag">Option 6</span>
+        <h2>Price Anchor</h2>
+        <p>Leads with the money angle — shows the cost of new wheels vs. refurbishment side by side. Value proposition is immediate.</p>
+    </div>
+    <section class="hero-6">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <span class="eyebrow">Alloy Wheel Refurbishment — Coleraine</span>
+                    <h1 class="headline">Why Pay £400+ Per Wheel<br>When We'll <span class="text-red">Refurb It<br>For a Fraction?</span></h1>
+                    <div class="price-compare">
+                        <div class="price-box price-box-old">
+                            <div class="price-label">New Alloy Wheel</div>
+                            <div class="price-amount">£300–£1,000</div>
+                        </div>
+                        <div class="price-box price-box-new">
+                            <div class="price-label">Refurbished</div>
+                            <div class="price-amount">From £50</div>
+                        </div>
+                    </div>
+                    <p class="subhead">Same showroom finish. Fraction of the price. Send a photo on WhatsApp and we'll give you your exact price in minutes.</p>
+                    <div class="hero-buttons">
+                        <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                            Get Your Exact Price
+                        </a>
+                    </div>
+                </div>
+                <div class="ba-wrapper">
+                    <div class="ba-slider">
+                        <img src="images/wheelbefore.png" alt="Before — corroded alloy">
+                        <img src="images/wheelafter.png" alt="After — like new">
+                    </div>
+                    <span class="ba-tag ba-tag-before">Before</span>
+                    <span class="ba-tag ba-tag-after">After</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         OPTION 7 — URGENCY / SEASONAL
+         "Limited slots, book now energy"
+         ============================================================ -->
+    <div class="option-divider" id="option7">
+        <span class="option-tag">Option 7</span>
+        <h2>Urgency &amp; Scarcity</h2>
+        <p>Pulsing "slots filling" badge, seasonal angle, creates FOMO. Great for busy periods or when you want to drive immediate action.</p>
+    </div>
+    <section class="hero-7">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <span class="urgency-badge">⚡ Spring Slots Filling Fast</span>
+                    <h1 class="headline">Get Your Alloys<br><span class="text-red">Sorted This Week</span><br>Before Summer</h1>
+                    <p class="subhead">Everyone wants fresh wheels for summer — and our diary fills up fast. Send your photos now, get priced today, and lock in your slot before they're gone.</p>
+                    <div class="hero-buttons">
+                        <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                            Grab Your Slot — Send a Photo
+                        </a>
+                        <a href="tel:+447500220669" class="btn btn-outline-light btn-sm">Call Now</a>
+                    </div>
+                </div>
+                <div class="ba-wrapper">
+                    <div class="ba-slider">
+                        <img src="images/wheelbefore.png" alt="Before">
+                        <img src="images/wheelafter.png" alt="After">
+                    </div>
+                    <span class="ba-tag ba-tag-before">Before</span>
+                    <span class="ba-tag ba-tag-after">After</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         OPTION 8 — TESTIMONIAL-LED
+         "Social proof first, then the offer"
+         ============================================================ -->
+    <div class="option-divider" id="option8">
+        <span class="option-tag">Option 8</span>
+        <h2>Testimonial-Led</h2>
+        <p>Leads with a real customer quote and stars. Builds trust before the headline even hits. Perfect if you have strong reviews.</p>
+    </div>
+    <section class="hero-8">
+        <div class="container">
+            <div class="hero-inner">
+                <span class="stars">★★★★★</span>
+                <p class="review-lead">"Couldn't believe the difference — my wheels looked brand new. Sent a photo in the morning, had a price by lunchtime, and they were done by Friday."</p>
+                <p class="review-author">— Verified Facebook Review</p>
+                <h1 class="headline" style="margin-top:24px;">Alloy Wheels Refurbished<br>To <span class="text-red">Factory Finish</span></h1>
+                <p class="subhead">Diamond cut, powder coat, full restoration. WhatsApp us a photo — your price comes back in minutes, not days.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        Send Photo — Get Your Price
+                    </a>
+                    <a href="tel:+447500220669" class="btn btn-outline-dark btn-sm">Call 07500 220669</a>
+                </div>
+                <div class="ba-compare">
+                    <img src="images/wheelbefore.png" alt="Before refurbishment">
+                    <img src="images/wheelafter.png" alt="After refurbishment">
+                    <span class="ba-tag ba-tag-before">Before</span>
+                    <span class="ba-tag ba-tag-after">After</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         OPTION 9 — BOLD DARK WITH OVERLAPPING REVEAL
+         "After wheel dominates, before peeks through"
+         ============================================================ -->
+    <div class="option-divider" id="option9">
+        <span class="option-tag">Option 9</span>
+        <h2>Dark &amp; Bold Reveal</h2>
+        <p>The refurbished wheel dominates the right side. The "before" peeks out behind it — showing the transformation without equal weight.</p>
+    </div>
+    <section class="hero-9">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <span class="eyebrow" style="color:var(--red-soft);">J. Calvin — Coleraine</span>
+                    <h1 class="headline">We Turn <span class="text-red">Wrecked Alloys</span><br>Into Wheels You're<br>Proud to Show Off</h1>
+                    <p class="subhead">Kerbed at a car park? Corroded from winter salt? We don't judge — we just fix them. WhatsApp a photo, get your price, and we'll have them looking mint within the week.</p>
+                    <div class="hero-buttons">
+                        <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                            WhatsApp Your Wheels
+                        </a>
+                        <a href="tel:+447500220669" class="btn btn-outline-light btn-sm">Call Us</a>
+                    </div>
+                    <div class="guarantee-strip">
+                        <span>✓ <strong>Same-week turnaround</strong> &bull; Diamond cut &bull; Powder coat &bull; Full restoration</span>
+                    </div>
+                </div>
+                <div class="ba-reveal">
+                    <img src="images/wheelafter.png" alt="Refurbished alloy wheel" class="after-wheel">
+                    <img src="images/wheelbefore.png" alt="Before refurbishment" class="before-wheel">
+                    <span class="ba-tag ba-tag-before">Before</span>
+                    <span class="ba-tag ba-tag-after">After</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         OPTION 10 — MINIMAL / PREMIUM
+         "Maximum white space, wheels speak for themselves"
+         ============================================================ -->
+    <div class="option-divider" id="option10">
+        <span class="option-tag">Option 10</span>
+        <h2>Minimal &amp; Premium</h2>
+        <p>Clean white background, centered headline, before and after wheels displayed as standalone cards below. Lets the work speak for itself.</p>
+    </div>
+    <section class="hero-10">
+        <div class="container">
+            <div class="hero-inner">
+                <img src="images/logo.png" alt="J. Calvin Alloy Wheel Refurbishment" class="logo-hero">
+                <h1 class="headline">Alloy Wheel Refurbishment<br>That <span class="text-red">Speaks for Itself</span></h1>
+                <p class="subhead">Coleraine's trusted specialist. Send a photo, get your price in minutes, have your wheels back looking factory-fresh within the week.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/447500220669?text=Hi%2C%20I%27d%20like%20a%20price%20on%20alloy%20wheel%20refurbishment.%20Here%20are%20my%20wheels%3A" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.46a.5.5 0 00.612.616l4.46-1.476A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.39-1.586l-.376-.234-3.302 1.094 1.112-3.272-.258-.394A9.94 9.94 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                        Send Photo — Get Your Price
+                    </a>
+                    <a href="tel:+447500220669" class="btn btn-outline-dark btn-sm">Call 07500 220669</a>
+                </div>
+                <div class="ba-showcase">
+                    <div class="ba-card ba-card-before">
+                        <img src="images/wheelbefore.png" alt="Before refurbishment">
+                        <span class="ba-card-label">Before</span>
+                    </div>
+                    <span class="ba-arrow">→</span>
+                    <div class="ba-card ba-card-after">
+                        <img src="images/wheelafter.png" alt="After refurbishment">
+                        <span class="ba-card-label">After</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- END -->
+    <div style="background:var(--charcoal);padding:80px 20px;text-align:center;">
+        <p style="color:rgba(255,255,255,0.3);font-size:0.85rem;">J. Calvin Hero Section Options — Pick your favourite and we'll build from there.</p>
+    </div>
+
+</body>
+</html>
